@@ -9,8 +9,8 @@ export function getFeedListFromURL() {
         const {
             URL,
         } = getState().app;
-      
-        //Resolve CORS problem
+
+        // Resolve CORS problem
         const newUrl = 'https://crossorigin.me/' + URL;
 
         dispatch(setIsLoading(true));
@@ -20,37 +20,41 @@ export function getFeedListFromURL() {
                 return response.text();
             }).then((response) => {
                 const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(response,"text/xml");
-                const x = xmlDoc.getElementsByTagName("item");
-    
+                const xmlDoc = parser.parseFromString(response, 'text/xml');
+                const x = xmlDoc.getElementsByTagName('item');
+
                 let newList = [];
-    
-                for (let i = 0; i < x.length; i++) {
-                    const title = x[i].getElementsByTagName("title")[0].innerHTML.replace('<![CDATA[', '').replace(']]>','');
-                    const description = x[i].getElementsByTagName("description")[0].innerHTML.replace('<![CDATA[', '').replace(']]>','');
-                    const link = x[i].getElementsByTagName("link")[0].innerHTML;
+
+                for (let i = 0; i < x.length; i=i+1) {
+                    const titleElement = x[i].getElementsByTagName('title')[0].innerHTML;
+                    const title = titleElement.replace('<![CDATA[', '').replace(']]>', '');
+
+                    const descElement = x[i].getElementsByTagName('description')[0].innerHTML;
+                    const description = descElement.replace('<![CDATA[', '').replace(']]>', '');
+
+                    const link = x[i].getElementsByTagName('link')[0].innerHTML;
+
                     const newItem = {
                         title,
                         description,
                         link,
-                    }
+                    };
                     newList.push(newItem);
                 }
 
                 dispatch(setFeedListAction(newList));
                 dispatch(setIsLoading(false));
             }).catch((err) => {
-                //TODO: set error
+                // TODO: set error
                 console.log(err);
                 dispatch(setFeedListAction([]));
                 dispatch(setIsLoading(false));
-            })
+            });
     };
-    
 }
 
 export function setURL(URL) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(setURLAction(URL));
     };
 }

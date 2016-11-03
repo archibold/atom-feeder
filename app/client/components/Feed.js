@@ -32,4 +32,4 @@ const STYLES = {
         flex: '1',
         padding: '15px',
     },
-}
+};

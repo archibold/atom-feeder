@@ -1,5 +1,5 @@
 import React from 'react';
-import Feed from 'components/Feed'
+import Feed from 'components/Feed';
 
 export default class FeedList extends React.Component {
     static propTypes = {
@@ -16,15 +16,19 @@ export default class FeedList extends React.Component {
             list,
             isLoading,
         } = this.props;
-        
-        if(isLoading) return (
-            <div style={STYLES.loading}>Loading...</div>
-        );
 
-        if(list.length === 0) return (
-            <div style={STYLES.loading}>Nothing here...</div>
-        );
-        
+        if (isLoading) {
+            return (
+                <div style={STYLES.loading}>Loading...</div>
+            );
+        }
+
+        if (list.length === 0) {
+            return (
+                <div style={STYLES.loading}>Nothing here...</div>
+            );
+        }
+
         const element = list.map((object, index) => {
             return (
               <Feed
@@ -54,4 +58,4 @@ const STYLES = {
         textAlign: 'center',
         color: 'gray',
     },
-}
+};

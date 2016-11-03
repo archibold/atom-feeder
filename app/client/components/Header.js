@@ -7,7 +7,7 @@ export default class Header extends React.Component {
 
     render() {
         const {
-          children
+          children,
         } = this.props;
 
         return (
@@ -22,4 +22,4 @@ const STYLES = {
     container: {
         textAlign: 'center',
     },
-}
+};

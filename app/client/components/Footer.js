@@ -18,6 +18,6 @@ const STYLES = {
         right: '0',
         height: '20px',
         textAlign: 'center',
-        background:' #F57F17',
+        background: '#F57F17',
     },
-}
+};

@@ -25,6 +25,7 @@ export default class App extends React.Component {
         feedList: React.PropTypes.array,
         isLoading: React.PropTypes.bool,
         dispatch: React.PropTypes.func,
+        URL: React.PropTypes.string,
     }
 
     render() {
@@ -57,10 +58,10 @@ export default class App extends React.Component {
         const {
             dispatch,
         } = this.props;
-      
+
         dispatch(getFeedListFromURL());
     }
-    
+
     onChange = (value) => {
         const {
             dispatch,
@@ -78,10 +79,10 @@ const STYLES = {
         right: '0',
         height: '70px',
         textAlign: 'center',
-        background:' #F57F17',
+        background: '#F57F17',
         overflow: 'hidden',
     },
     container: {
-      marginTop: '80px',
-    }
-}
+        marginTop: '80px',
+    },
+};

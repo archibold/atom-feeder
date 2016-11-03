@@ -29,7 +29,9 @@ export default class Input extends React.Component {
         return (
             <div style={STYLES.container}>
                 <input
-                    onChange={(e) => {onChange(e.target.value)}}
+                    onChange={(e) => {
+                        onChange(e.target.value);
+                    }}
                     onKeyDown={onKeyDown}
                     style={STYLES.input}
                     value={value}
@@ -41,23 +43,23 @@ export default class Input extends React.Component {
     }
 
     onClick= () => {
-      const {
-          onEnter,
-          value
-      } = this.props;
+        const {
+            onEnter,
+            value,
+        } = this.props;
 
-      onEnter(value);
+        onEnter(value);
     }
-    
-    onKeyDown = (e) => {
-      const {
-          onEnter,
-          value
-      } = this.props;
 
-      if (e.keyCode === 13) {
-          onEnter(value);
-      }
+    onKeyDown = (e) => {
+        const {
+            onEnter,
+            value,
+        } = this.props;
+
+        if (e.keyCode === 13) {
+            onEnter(value);
+        }
     }
 }
 
@@ -73,4 +75,5 @@ const STYLES = {
     button: {
         flex: '0.2',
     },
-}
+};
+
