@@ -1,48 +1,87 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 
-// ReactBoostrap components:
-import Grid from 'react-bootstrap/lib/Grid';
-import Jumbotron from 'react-bootstrap/lib/Jumbotron';
-import Button from 'react-bootstrap/lib/Button';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+// Components
+import Header from 'components/Header';
+import FeedList from 'components/FeedList';
+import Input from 'components/Input';
+import Footer from 'components/Footer';
 
-const STYLES = {
-    grid: {
-        marginTop: 50,
-    },
-    jumbo: {
-        borderRadius: 0,
-        boxShadow: '2px 2px 5px #aaa',
-    },
-    icon: {
-        marginRight: 10,
-    },
-};
+// Services
+import {
+  setURL,
+  getFeedListFromURL,
+} from 'services/feeder-services.js';
 
-@connect(s => s.app)
+@connect(state => {
+    return {
+        URL: state.app.URL,
+        feedList: state.app.feedList,
+        isLoading: state.app.isLoading,
+    };
+})
 export default class App extends React.Component {
-
     static propTypes = {
-        title: React.PropTypes.string,
+        feedList: React.PropTypes.array,
+        isLoading: React.PropTypes.bool,
+        dispatch: React.PropTypes.func,
     }
 
     render() {
+        const {
+            feedList,
+            isLoading,
+            URL,
+        } = this.props;
 
-        var reappUrl = 'https://github.com/marcopeg/generator-reapp';
+        const {
+            onEnter,
+            onChange,
+        } = this;
 
         return (
-            <Grid style={STYLES.grid}>
-                <Jumbotron style={STYLES.jumbo}>
-                    <h3>{this.props.title}</h3>
-                    <p>This <i>React/Redux</i> app is ready to rock the world!</p>
-                    <Button href={reappUrl} bsStyle="success" target="_blank">
-                        <Glyphicon glyph="hand-right" style={STYLES.icon} />
-                        Learn more about Reapp
-                    </Button>
-                </Jumbotron>
-            </Grid>
+            <div>
+              <div style={STYLES.header}>
+                <Header>Atom Feeder</Header>
+              </div>
+              <div style={STYLES.container}>
+                <Input value={URL} onEnter={onEnter} onChange={onChange} />
+                <FeedList list={feedList} isLoading={isLoading} />
+              </div>
+                <Footer />
+            </div>
         );
+    }
+
+    onEnter = () => {
+        const {
+            dispatch,
+        } = this.props;
+      
+        dispatch(getFeedListFromURL());
+    }
+    
+    onChange = (value) => {
+        const {
+            dispatch,
+        } = this.props;
+
+        dispatch(setURL(value));
+    }
+}
+
+const STYLES = {
+    header: {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        right: '0',
+        height: '70px',
+        textAlign: 'center',
+        background:' #F57F17',
+        overflow: 'hidden',
+    },
+    container: {
+      marginTop: '80px',
     }
 }
