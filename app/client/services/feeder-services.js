@@ -3,6 +3,7 @@ import {
     setFeedList as setFeedListAction,
     setIsLoading,
 } from 'actions/app-actions';
+import 'whatwg-fetch';
 
 export function getFeedListFromURL() {
     return (dispatch, getState) => {
@@ -21,18 +22,35 @@ export function getFeedListFromURL() {
             }).then((response) => {
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(response, 'text/xml');
-                const x = xmlDoc.getElementsByTagName('item');
+                let x = xmlDoc.getElementsByTagName('item');
+
+                if (x.length === 0) {
+                  x = xmlDoc.getElementsByTagName('entry');
+                }
 
                 let newList = [];
 
                 for (let i = 0; i < x.length; i=i+1) {
-                    const titleElement = x[i].getElementsByTagName('title')[0].innerHTML;
-                    const title = titleElement.replace('<![CDATA[', '').replace(']]>', '');
+                    const titleElement = x[i].getElementsByTagName('title')[0];
+                    let title = "";
 
-                    const descElement = x[i].getElementsByTagName('description')[0].innerHTML;
-                    const description = descElement.replace('<![CDATA[', '').replace(']]>', '');
+                    if (titleElement) {
+                      title = titleElement.innerHTML.replace('<![CDATA[', '').replace(']]>', '');
+                    }
 
-                    const link = x[i].getElementsByTagName('link')[0].innerHTML;
+                    const descElement = x[i].getElementsByTagName('description')[0];
+                    let description = "";
+
+                    if (descElement) {
+                      description = descElement.innerHTML.replace('<![CDATA[', '').replace(']]>', '');
+                    }
+
+                    const linkElement = x[i].getElementsByTagName('link')[0];
+                    let link = "#";
+
+                    if (linkElement) {
+                      link = linkElement.innerHTML;
+                    }
 
                     const newItem = {
                         title,

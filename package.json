@@ -53,5 +53,8 @@
     "url-loader": "^0.5.x",
     "webpack": "^1.12.x",
     "webpack-dev-server": "^1.14.x"
+  },
+  "dependencies": {
+    "whatwg-fetch": "^1.0.0"
   }
 }
