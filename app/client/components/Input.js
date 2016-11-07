@@ -8,6 +8,8 @@ export default class Input extends React.Component {
         value: React.PropTypes.string.isRequired,
         onChange: React.PropTypes.func,
         onEnter: React.PropTypes.func,
+        style: React.PropTypes.object,
+        isLoading: React.PropTypes.bool,
     }
 
     static defaultProps = {
@@ -19,6 +21,8 @@ export default class Input extends React.Component {
         const {
             value,
             onChange,
+            style,
+            isLoading,
         } = this.props;
 
         const {
@@ -26,8 +30,21 @@ export default class Input extends React.Component {
             onKeyDown,
         } = this;
 
+        const containerStyle = {
+            ...STYLES.container,
+            ...style,
+        };
+
+        let ButtonTitle = 'Show';
+
+        if (isLoading) {
+            ButtonTitle = (
+                <div className="loader">Loading...</div>
+            );
+        }
+
         return (
-            <div style={STYLES.container}>
+            <div style={containerStyle}>
                 <input
                     onChange={(e) => {
                         onChange(e.target.value);
@@ -37,7 +54,7 @@ export default class Input extends React.Component {
                     value={value}
                     placeholder="URL to RSS"
                 />
-                <Button style={STYLES.button} onClick={onClick}>SHOW</Button>
+                <Button style={STYLES.button} onClick={onClick}>{ButtonTitle}</Button>
             </div>
         );
     }
@@ -65,15 +82,23 @@ export default class Input extends React.Component {
 
 const STYLES = {
     container: {
-        margin: '0 auto',
-        maxWidth: '350px',
+        maxWidth: '450px',
         display: 'flex',
+        alignItems: 'center',
     },
     input: {
         flex: '0.8',
+        background: '#FBC02D',
+        border: 'none',
+        padding: '5px',
+        outline: 'none',
+        height: '35px',
     },
     button: {
         flex: '0.2',
+        height: '35px',
+        background: '#FFF176',
+        border: 'none',
     },
 };
 

@@ -25,31 +25,35 @@ export function getFeedListFromURL() {
                 let x = xmlDoc.getElementsByTagName('item');
 
                 if (x.length === 0) {
-                  x = xmlDoc.getElementsByTagName('entry');
+                    x = xmlDoc.getElementsByTagName('entry');
                 }
 
                 let newList = [];
 
                 for (let i = 0; i < x.length; i=i+1) {
                     const titleElement = x[i].getElementsByTagName('title')[0];
-                    let title = "";
+                    let title = '';
 
                     if (titleElement) {
-                      title = titleElement.innerHTML.replace('<![CDATA[', '').replace(']]>', '');
+                        title = titleElement.innerHTML.replace('<![CDATA[', '').replace(']]>', '');
                     }
 
                     const descElement = x[i].getElementsByTagName('description')[0];
-                    let description = "";
+                    let description = '';
 
                     if (descElement) {
-                      description = descElement.innerHTML.replace('<![CDATA[', '').replace(']]>', '');
+                        description = descElement.innerHTML
+                            .replace('<![CDATA[', '').replace(']]>', '');
                     }
 
                     const linkElement = x[i].getElementsByTagName('link')[0];
-                    let link = "#";
+                    let link = '#';
+                    const hrefAttribute = linkElement.getAttribute('href');
 
-                    if (linkElement) {
-                      link = linkElement.innerHTML;
+                    if (hrefAttribute) {
+                        link = hrefAttribute;
+                    } else {
+                        link = linkElement.innerHTML;
                     }
 
                     const newItem = {

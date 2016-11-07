@@ -4,7 +4,7 @@ import Feed from 'components/Feed';
 export default class FeedList extends React.Component {
     static propTypes = {
         list: React.PropTypes.array,
-        isLoading: React.PropTypes.bool,
+        style: React.PropTypes.object,
     }
 
     static defaultProps = {
@@ -14,20 +14,19 @@ export default class FeedList extends React.Component {
     render() {
         const {
             list,
-            isLoading,
+            style,
         } = this.props;
-
-        if (isLoading) {
-            return (
-                <div style={STYLES.loading}>Loading...</div>
-            );
-        }
 
         if (list.length === 0) {
             return (
-                <div style={STYLES.loading}>Nothing here...</div>
+                <div style={{ flex: '0' }}></div>
             );
         }
+
+        const containerElement = {
+            ...STYLES.list,
+            ...style,
+        };
 
         const element = list.map((object, index) => {
             return (
@@ -41,7 +40,7 @@ export default class FeedList extends React.Component {
         });
 
         return (
-            <div style={STYLES.list}>
+            <div style={containerElement}>
                 {element}
             </div>
         );

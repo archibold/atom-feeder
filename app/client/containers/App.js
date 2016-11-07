@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Components
-import Header from 'components/Header';
 import FeedList from 'components/FeedList';
 import Input from 'components/Input';
 import Footer from 'components/Footer';
@@ -41,14 +40,17 @@ export default class App extends React.Component {
         } = this;
 
         return (
-            <div>
+            <div style={STYLES.container}>
               <div style={STYLES.header}>
-                <Header>Atom Feeder</Header>
+                <h1 style={STYLES.headerTitle}>Atom</h1>
+                <Input
+                    style={STYLES.input}
+                    value={URL}
+                    onEnter={onEnter}
+                    onChange={onChange}
+                    isLoading={isLoading} />
               </div>
-              <div style={STYLES.container}>
-                <Input value={URL} onEnter={onEnter} onChange={onChange} />
-                <FeedList list={feedList} isLoading={isLoading} />
-              </div>
+                <FeedList style={STYLES.content} list={feedList} />
                 <Footer />
             </div>
         );
@@ -72,17 +74,34 @@ export default class App extends React.Component {
 }
 
 const STYLES = {
-    header: {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        right: '0',
-        height: '70px',
-        textAlign: 'center',
-        background: '#F57F17',
-        overflow: 'hidden',
-    },
     container: {
-        marginTop: '80px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    header: {
+        background: '#FFEB3B',
+        flex: '1',
+        transition: 'flex 1s linear',
+        padding: '15px',
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    headerTitle: {
+        minWidth: '250px',
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    input: {
+        flex: '1',
+        display: 'flex',
+    },
+    content: {
+        flex: '10',
+        transition: 'flex 1s linear',
+        padding: '15px',
+        background: '#FFF9C4',
+        overflow: 'auto',
     },
 };
