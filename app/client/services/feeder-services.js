@@ -2,6 +2,7 @@ import {
     setURL as setURLAction,
     setFeedList as setFeedListAction,
     setIsLoading,
+    setActiveFeed as setActiveFeedAction,
 } from 'actions/app-actions';
 import 'whatwg-fetch';
 
@@ -78,5 +79,11 @@ export function getFeedListFromURL() {
 export function setURL(URL) {
     return (dispatch) => {
         dispatch(setURLAction(URL));
+    };
+}
+
+export function setActiveFeed(value) {
+    return (dispatch) => {
+        dispatch(setActiveFeedAction(value));
     };
 }

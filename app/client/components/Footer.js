@@ -16,7 +16,7 @@ const STYLES = {
         bottom: '0',
         left: '0',
         right: '0',
-        height: '20px',
+        height: '15px',
         textAlign: 'center',
         background: '#FFEB3B',
     },

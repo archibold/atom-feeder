@@ -22,6 +22,7 @@ export function start(targetEl, payload) {
     // apply the host's page payload
     if (payload.title) {
         initialState.app = {
+            ...initialState.app,
             title: payload.title,
         };
     }

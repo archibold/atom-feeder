@@ -2,34 +2,63 @@ import React from 'react';
 
 export default class Feed extends React.Component {
     static propTypes = {
-        link: React.PropTypes.string,
         title: React.PropTypes.string,
         description: React.PropTypes.string,
+        isActive: React.PropTypes.bool,
+
+        onClick: React.PropTypes.func,
+    }
+
+    static defaultProps = {
+        onClick: () => {},
     }
 
     render() {
         const {
-            link,
             title,
             description,
+            isActive,
+
+            onClick,
         } = this.props;
 
+        let elementStyle = {
+            ...STYLES.element,
+        };
+
+        if (isActive) {
+            elementStyle = {
+                ...elementStyle,
+                ...STYLES.activeFeed,
+            };
+        }
+        const descriptionElement = description.replace(/<[^>]*>/g, '');
         return (
-            <a href={link}>
-                <div style={STYLES.element}>
-                    <h2 style={STYLES.header}>{title}</h2>
-                    <p>{description}</p>
-                </div>
-            </a>
+            <button style={elementStyle} onClick={onClick}>
+                <h2 style={STYLES.header}>{title}</h2>
+                <p style={STYLES.description}>{descriptionElement}</p>
+            </button>
         );
     }
 }
 
 const STYLES = {
     element: {
-        maxWidth: '350px',
+        textAlign: 'left',
+        background: 'none',
+        outline: 'none',
+        border: 'none',
         wordWrap: 'break-word',
-        flex: '1',
         padding: '15px',
+        width: '100%',
+    },
+    header: {
+        fontSize: '20px',
+    },
+    description: {
+        fontSize: '15px',
+    },
+    activeFeed: {
+        background: 'gainsboro',
     },
 };

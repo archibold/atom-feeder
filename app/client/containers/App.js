@@ -10,6 +10,7 @@ import Footer from 'components/Footer';
 import {
   setURL,
   getFeedListFromURL,
+  setActiveFeed,
 } from 'services/feeder-services.js';
 
 @connect(state => {
@@ -17,26 +18,30 @@ import {
         URL: state.app.URL,
         feedList: state.app.feedList,
         isLoading: state.app.isLoading,
+        activeFeed: state.app.activeFeed,
     };
 })
 export default class App extends React.Component {
     static propTypes = {
+        URL: React.PropTypes.string,
         feedList: React.PropTypes.array,
         isLoading: React.PropTypes.bool,
+        activeFeed: React.PropTypes.number,
         dispatch: React.PropTypes.func,
-        URL: React.PropTypes.string,
     }
 
     render() {
         const {
+            URL,
             feedList,
             isLoading,
-            URL,
+            activeFeed,
         } = this.props;
 
         const {
             onEnter,
             onChange,
+            onChangeActiveFeed,
         } = this;
 
         return (
@@ -49,10 +54,14 @@ export default class App extends React.Component {
                       onEnter={onEnter}
                       onChange={onChange}
                       isLoading={isLoading} />
-                  <h1 style={STYLES.headerTitle}>Atom</h1>
+                  <h1 style={STYLES.headerTitle}>Feeds for</h1>
                 </div>
               </div>
-                <FeedList style={STYLES.feedList} list={feedList} />
+                <FeedList
+                    style={STYLES.feedList}
+                    list={feedList}
+                    activeFeed={activeFeed}
+                    onChangeActiveFeed={onChangeActiveFeed} />
                 <Footer />
             </div>
         );
@@ -73,6 +82,14 @@ export default class App extends React.Component {
 
         dispatch(setURL(value));
     }
+
+    onChangeActiveFeed = (value) => {
+        const {
+              dispatch,
+          } = this.props;
+
+        dispatch(setActiveFeed(value));
+    }
 }
 
 const STYLES = {
@@ -86,14 +103,14 @@ const STYLES = {
         flex: '1',
         padding: '10px',
         display: 'flex',
-
         alignItems: 'center',
     },
     headerTitle: {
         alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 15px',
         display: 'flex',
-        justifyContent: 'center',
-        flex: '1',
+        flex: '0.5',
     },
     headerInput: {
         flex: '1',
@@ -105,13 +122,14 @@ const STYLES = {
         flexWrap: 'wrap',
         flexDirection: 'row-reverse',
         overflow: 'hidden',
-        flex: '1'
+        flex: '1',
     },
     feedList: {
         flex: '10',
         transition: 'flex 1s linear',
         padding: '15px',
+        // Footer is in fixed position (change it to flex)
+        paddingBottom: '30px',
         background: '#FFF9C4',
-        overflow: 'auto',
     },
 };
