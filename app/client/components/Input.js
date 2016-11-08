@@ -82,7 +82,6 @@ export default class Input extends React.Component {
 
 const STYLES = {
     container: {
-        maxWidth: '450px',
         display: 'flex',
         alignItems: 'center',
     },

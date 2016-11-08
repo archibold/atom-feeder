@@ -42,15 +42,17 @@ export default class App extends React.Component {
         return (
             <div style={STYLES.container}>
               <div style={STYLES.header}>
-                <h1 style={STYLES.headerTitle}>Atom</h1>
-                <Input
-                    style={STYLES.input}
-                    value={URL}
-                    onEnter={onEnter}
-                    onChange={onChange}
-                    isLoading={isLoading} />
+                <div style={STYLES.headerWrapper}>
+                  <Input
+                      style={STYLES.headerInput}
+                      value={URL}
+                      onEnter={onEnter}
+                      onChange={onChange}
+                      isLoading={isLoading} />
+                  <h1 style={STYLES.headerTitle}>Atom</h1>
+                </div>
               </div>
-                <FeedList style={STYLES.content} list={feedList} />
+                <FeedList style={STYLES.feedList} list={feedList} />
                 <Footer />
             </div>
         );
@@ -82,22 +84,30 @@ const STYLES = {
     header: {
         background: '#FFEB3B',
         flex: '1',
-        transition: 'flex 1s linear',
-        padding: '15px',
+        padding: '10px',
         display: 'flex',
-        flexWrap: 'wrap',
+
+        alignItems: 'center',
     },
     headerTitle: {
-        minWidth: '250px',
         alignItems: 'center',
         display: 'flex',
         justifyContent: 'center',
+        flex: '1',
     },
-    input: {
+    headerInput: {
         flex: '1',
         display: 'flex',
     },
-    content: {
+    headerWrapper: {
+        height: '35px',
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row-reverse',
+        overflow: 'hidden',
+        flex: '1'
+    },
+    feedList: {
         flex: '10',
         transition: 'flex 1s linear',
         padding: '15px',
